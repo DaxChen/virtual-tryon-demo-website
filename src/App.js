@@ -314,7 +314,7 @@ class App extends React.Component {
       <div>
         <AppBar position="sticky">
           <Toolbar>
-            <h1>OpenCV.js Background Removal using Canny Edge Detection</h1>
+            <h1>OpenCV.js Background Removal</h1>
           </Toolbar>
         </AppBar>
 
