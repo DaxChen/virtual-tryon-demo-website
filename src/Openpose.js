@@ -21,6 +21,8 @@ export default class Openpose extends React.Component {
   };
 
   callOpenpose = (file) => {
+    if (this.state.loading) return;
+
     this.setState({ loading: true });
 
     const formData = new FormData();
