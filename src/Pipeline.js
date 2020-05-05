@@ -7,20 +7,26 @@ import ReactJson from "react-json-view";
 import Jimp from "jimp/es";
 import { store } from "react-notifications-component";
 
-import { dataURL2file, loadOneImg } from "./image-processing";
+import { dataURL2file, loadOneImg, img2dataURL } from "./image-processing";
 import Loading from "./Loading";
+import modelImg from "./imgs/test-model.jpg";
+import model2Img from "./imgs/test-model2.jpg";
+import model3Img from "./imgs/uniqlo-model.png";
+import model4Img from "./imgs/uniqlo-model2.jpg";
+import clothBlueImg from "./imgs/test-blue.png";
+import clothRedImg from "./imgs/test-red.png";
+import clothGreenImg from "./imgs/test-green.png";
+import clothPurpleImg from "./imgs/uniqlo-purple.png";
+import clothGrayImg from "./imgs/uniqlo-short-gray.png";
 
 const Wrapper = styled.div`
   padding: 1rem;
-
-  .MuiPaper-root {
-    padding: 1rem;
-  }
-
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+
   > .MuiPaper-root {
+    padding: 1rem;
     flex: 1 1 0px;
     min-width: 300px;
     max-width: 600px;
@@ -41,6 +47,30 @@ const Wrapper = styled.div`
       display: flex;
       align-items: center;
       justify-content: center;
+    }
+  }
+
+  .examples {
+    overflow-x: auto;
+    display: flex;
+    align-items: center;
+    > * {
+      margin: 1rem;
+    }
+  }
+  .example {
+    display: inline-block;
+    position: relative;
+    img {
+      width: 192px;
+      height: 256px;
+      object-fit: contain;
+    }
+    button {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      bottom: 0;
     }
   }
 `;
@@ -274,6 +304,20 @@ export default class Pipeline extends React.Component {
     this.generateMask(clothCV);
   };
 
+  onChooseModel = async (url) => {
+    const img = await loadOneImg(url);
+    const dataURL = img2dataURL(img);
+    const file = dataURL2file(dataURL);
+    this.onUploadModel({ target: { files: [file] } });
+  };
+
+  onChooseCloth = async (url) => {
+    const img = await loadOneImg(url);
+    const dataURL = img2dataURL(img);
+    const file = dataURL2file(dataURL);
+    this.onUploadClothes({ target: { files: [file] } });
+  };
+
   render() {
     const {
       modelUrl,
@@ -292,19 +336,39 @@ export default class Pipeline extends React.Component {
       <Wrapper>
         <Paper elevation={3}>
           <h2>Model Pre-Processing</h2>
-          {/* model input */}
-          <input
-            accept="image/*"
-            style={{ display: "none" }}
-            id="modelInput"
-            type="file"
-            onChange={this.onUploadModel}
-          />
-          <label htmlFor="modelInput">
-            <Button variant="contained" color="primary" component="span">
-              Upload Image of Model
-            </Button>
-          </label>
+
+          <h4>Upload your image or click one of the examples below</h4>
+          <div className="examples">
+            {/* model input */}
+            <input
+              accept="image/*"
+              style={{ display: "none" }}
+              id="modelInput"
+              type="file"
+              onChange={this.onUploadModel}
+            />
+            <label htmlFor="modelInput">
+              <Button variant="contained" color="primary" component="span">
+                Upload Image of Model
+              </Button>
+            </label>
+          </div>
+
+          <div className="examples">
+            {[modelImg, model2Img, model3Img, model4Img].map((imgUrl) => (
+              <div className="example" key={imgUrl}>
+                <img src={imgUrl} alt="example model" />
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  onClick={() => this.onChooseModel(imgUrl)}
+                >
+                  Choose
+                </Button>
+              </div>
+            ))}
+          </div>
 
           <div className="block">
             <h3>Resized Image (256x192)</h3>
@@ -363,19 +427,45 @@ export default class Pipeline extends React.Component {
             .
           </p>
           <p>Then upload the PNG here</p>
-          {/* clothes input */}
-          <input
-            accept="image/png"
-            style={{ display: "none" }}
-            id="clothesInput"
-            type="file"
-            onChange={this.onUploadClothes}
-          />
-          <label htmlFor="clothesInput">
-            <Button variant="contained" color="primary" component="span">
-              Upload Image of Clothes
-            </Button>
-          </label>
+
+          <h4>Upload your image or click one of the examples below</h4>
+          <div className="examples">
+            {/* clothes input */}
+            <input
+              accept="image/png"
+              style={{ display: "none" }}
+              id="clothesInput"
+              type="file"
+              onChange={this.onUploadClothes}
+            />
+            <label htmlFor="clothesInput">
+              <Button variant="contained" color="primary" component="span">
+                Upload Image of Clothes
+              </Button>
+            </label>
+          </div>
+
+          <div className="examples">
+            {[
+              clothRedImg,
+              clothBlueImg,
+              clothGreenImg,
+              clothGrayImg,
+              clothPurpleImg,
+            ].map((imgUrl) => (
+              <div className="example" key={imgUrl}>
+                <img src={imgUrl} alt="example clothes" />
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  onClick={() => this.onChooseCloth(imgUrl)}
+                >
+                  Choose
+                </Button>
+              </div>
+            ))}
+          </div>
 
           <div className="block">
             <h3>Resized Image (256x192)</h3>
