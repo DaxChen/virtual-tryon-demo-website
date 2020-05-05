@@ -71,7 +71,7 @@ export default class Pipeline extends React.Component {
     formData.append("file", file);
 
     axios
-      .post("/api/openpose", formData, {
+      .post("https://openpose-s3mg3fuleq-uc.a.run.app/", formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -102,7 +102,7 @@ export default class Pipeline extends React.Component {
       });
 
     axios
-      .post("/api/lip_jppnet", formData, {
+      .post("https://lip-jppnet-s3mg3fuleq-uc.a.run.app/", formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
@@ -159,7 +159,7 @@ export default class Pipeline extends React.Component {
     formData.append("cloth-mask", clothMaskFile);
     formData.append("pose", poseFile);
     axios
-      .post("/api/cpvton", formData, {
+      .post("https://cpvton-s3mg3fuleq-uc.a.run.app/", formData, {
         headers: {
           "content-type": "multipart/form-data",
         },
