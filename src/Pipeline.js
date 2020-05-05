@@ -124,7 +124,7 @@ export default class Pipeline extends React.Component {
 
     if (cpvtonLoading) return;
 
-    this.setState({ cpvtonLoading: true });
+    this.setState({ cpvtonLoading: true, cpvton: null });
 
     // generate pose.json
     const poseFile = new Blob([JSON.stringify(openpose.keypoints)], {
@@ -201,12 +201,18 @@ export default class Pipeline extends React.Component {
     // resize
     const img = await Jimp.read(URL.createObjectURL(e.target.files[0]));
     img.contain(192, 256);
+    img.background(0xffffffff);
     // console.log(img);
 
     const modelUrl = await img.getBase64Async(Jimp.MIME_JPEG);
     const modelFile = dataURL2file(modelUrl);
 
-    this.setState({ modelFile, modelUrl });
+    this.setState({
+      modelFile,
+      modelUrl,
+      openpose: null,
+      jppnet: null,
+    });
 
     this.callOpenposeAndJppnet(modelFile);
   };
