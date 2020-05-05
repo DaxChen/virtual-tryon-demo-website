@@ -400,6 +400,10 @@ export default class Pipeline extends React.Component {
           </div>
           <div className="block">
             <h3>LIP_JPPNet</h3>
+            <p>
+              Because we use free Google Cloud Run, this step take around 60-120
+              seconds.
+            </p>
             <Loading loading={jppnetLoading} backdrop={false} />
             {jppnet && (
               <div>
