@@ -346,9 +346,15 @@ export default class Pipeline extends React.Component {
               id="modelInput"
               type="file"
               onChange={this.onUploadModel}
+              disabled={openposeLoading || jppnetLoading}
             />
             <label htmlFor="modelInput">
-              <Button variant="contained" color="primary" component="span">
+              <Button
+                variant="contained"
+                color="primary"
+                component="span"
+                disabled={openposeLoading || jppnetLoading}
+              >
                 Upload Image of Model
               </Button>
             </label>
@@ -363,6 +369,7 @@ export default class Pipeline extends React.Component {
                   color="secondary"
                   size="small"
                   onClick={() => this.onChooseModel(imgUrl)}
+                  disabled={openposeLoading || jppnetLoading}
                 >
                   Choose
                 </Button>
@@ -380,7 +387,11 @@ export default class Pipeline extends React.Component {
           </div>
           <div className="block">
             <h3>Openpose</h3>
-            <Loading loading={openposeLoading} backdrop={false} />
+            <Loading
+              key="openpose"
+              loading={openposeLoading}
+              backdrop={false}
+            />
             {openpose && (
               <div>
                 <h3>rendered:</h3>
@@ -404,7 +415,7 @@ export default class Pipeline extends React.Component {
               Because we use free Google Cloud Run, this step take around 60-120
               seconds.
             </p>
-            <Loading loading={jppnetLoading} backdrop={false} />
+            <Loading key="jpp" loading={jppnetLoading} backdrop={false} />
             {jppnet && (
               <div>
                 <img src={jppnet.vis} alt="" />
