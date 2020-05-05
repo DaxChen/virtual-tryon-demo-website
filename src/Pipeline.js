@@ -5,6 +5,7 @@ import axios from "axios";
 import { Button, Paper } from "@material-ui/core";
 import ReactJson from "react-json-view";
 import Jimp from "jimp/es";
+import { store } from "react-notifications-component";
 
 import { dataURL2file, loadOneImg } from "./image-processing";
 import Loading from "./Loading";
@@ -86,8 +87,18 @@ export default class Pipeline extends React.Component {
       })
       .catch((error) => {
         this.setState({ openposeLoading: false });
-        // TODO: show error message
         console.log(error);
+        store.addNotification({
+          title: "Error in Openpose",
+          message: error.message,
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          dismiss: {
+            duration: 0,
+            showIcon: true,
+          },
+        });
       });
 
     axios
@@ -107,8 +118,18 @@ export default class Pipeline extends React.Component {
       })
       .catch((error) => {
         this.setState({ jppnetLoading: false });
-        // TODO: show error message
         console.log(error);
+        store.addNotification({
+          title: "Error in LIP_JPPNet",
+          message: error.message,
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          dismiss: {
+            duration: 0,
+            showIcon: true,
+          },
+        });
       });
   };
 
@@ -155,8 +176,18 @@ export default class Pipeline extends React.Component {
       })
       .catch((error) => {
         this.setState({ cpvtonLoading: false });
-        // TODO: show error message
         console.log(error);
+        store.addNotification({
+          title: "Error in CP-VTON",
+          message: error.message,
+          type: "danger",
+          insert: "top",
+          container: "top-right",
+          dismiss: {
+            duration: 0,
+            showIcon: true,
+          },
+        });
       });
   };
 
@@ -363,7 +394,8 @@ export default class Pipeline extends React.Component {
         <Paper elevation={3}>
           <h2>Final Try-On</h2>
           <p>
-            Finish the above to part, then you can click this button to try-on!
+            Finish the model pre-processing and clothes pre-processing parts,
+            then you can click this button to try-on!
           </p>
           <Button
             variant="contained"

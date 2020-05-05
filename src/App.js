@@ -2,6 +2,8 @@ import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import { Button, AppBar, Toolbar } from "@material-ui/core";
 import styled from "styled-components";
+import ReactNotification from "react-notifications-component";
+import "react-notifications-component/dist/theme.css";
 
 import BackgroundRemove from "./BackgroundRemove";
 import Pipeline from "./Pipeline";
@@ -45,6 +47,7 @@ export default function App() {
   return (
     <Router>
       <Wrapper>
+        <ReactNotification />
         <AppBar position="sticky">
           <Toolbar>
             <h1 className="appbar-title">
