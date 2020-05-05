@@ -4,7 +4,7 @@ import { Button, AppBar, Toolbar } from "@material-ui/core";
 import styled from "styled-components";
 
 import BackgroundRemove from "./BackgroundRemove";
-import Openpose from "./Openpose";
+import Pipeline from "./Pipeline";
 
 const Wrapper = styled.div`
   .appbar-title {
@@ -38,7 +38,7 @@ export default function App() {
             >
               OpenCV.js Background Remove
             </Button>
-            <Button
+            {/* <Button
               className="appbar-link"
               component={Link}
               to="/openpose"
@@ -46,21 +46,19 @@ export default function App() {
               color="secondary"
             >
               Openpose
-            </Button>
+            </Button> */}
           </Toolbar>
         </AppBar>
 
         {/* A <Switch> looks through its children <Route>s and
               renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/" exact></Route>
+          <Route path="/" exact>
+            <Pipeline />
+          </Route>
 
           <Route path="/background-remove" exact>
             <BackgroundRemove />
-          </Route>
-
-          <Route path="/openpose" exact>
-            <Openpose />
           </Route>
         </Switch>
       </Wrapper>

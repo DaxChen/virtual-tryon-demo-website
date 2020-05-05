@@ -2,3 +2,8 @@
 
 # for SPA
 /*    /index.html   200
+
+# API proxy
+/api/openpose/*  https://openpose-s3mg3fuleq-uc.a.run.app/:splat  200
+/api/lip_jppnet/*  https://lip-jppnet-s3mg3fuleq-uc.a.run.app/:splat  200
+/api/cpvton/*  https://cpvton-s3mg3fuleq-uc.a.run.app/:splat  200
